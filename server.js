@@ -54,7 +54,7 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
       .exec((errUser,resultUser) => 
       {
        // typeof resultUser!=='undefined' || resultUser!==null)
-        if(!errUser &&  !resultUser)
+        if(!errUser &&  !isEmpty(resultUser))
         {
           inputUsername=resultUser.username
           idUsername=resultUser._id
