@@ -49,31 +49,42 @@ let Log=mongoose.model('Log',logSchema)
 app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=req.body['username'];
   let idUsername=0
-  User.findOne({})
-      .sort({username:1})
-      .exec((errUser,resultUser) => 
-      {
-       // typeof resultUser!=='undefined' || resultUser!==null)
-        if(!errUser  && ((typeof resultUser!=='undefined') || (typeof resultUser!=='null' )))
-        {
-          inputUsername=resultUser.username
-          idUsername=resultUser._id
-        }
-          if(!errUser)
-          {
-            User.findOneAndUpdate(
-              {username:inputUsername},
-              {new:true,upsert:true},
-              (err,saveUser)=>{
-                if(!err){
-                 res.json(saveUser)
-                }
-              }
-            )
-          }
+
+  User.findOneAndUpdate(
+    {username:inputUsername},
+    {new:true,upsert:true},
+    (err,saveUser)=>{
+      if(!err){
+       res.json(saveUser)
       }
+    }
+  )
+
+  // User.findOne({})
+  //     .sort({username:1})
+  //     .exec((errUser,resultUser) => 
+  //     {
+  //      // typeof resultUser!=='undefined' || resultUser!==null)
+  //       // if(!errUser  && ((typeof resultUser!=='undefined') || (typeof resultUser!=='null' )))
+  //       // {
+  //       //   inputUsername=resultUser.username
+  //       //   idUsername=resultUser._id
+  //       // }
+  //         if(!errUser)
+  //         {
+  //           User.findOneAndUpdate(
+  //             {username:inputUsername},
+  //             {new:true,upsert:true},
+  //             (err,saveUser)=>{
+  //               if(!err){
+  //                res.json(saveUser)
+  //               }
+  //             }
+  //           )
+  //         }
+  //     }
       
-        )
+        // )
     
 
 
