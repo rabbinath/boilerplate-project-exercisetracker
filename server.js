@@ -70,7 +70,8 @@ app.get('/api/users',function(req,res){
 )})
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
-  let inputId =req.body[':_id'];
+ // let inputId =req.body[':_id'];
+ let inputUsername=req.body['username'];
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
   let inputDate=req.body['date'];
@@ -78,8 +79,8 @@ if(!inputDate){
   inputDate=new Date().toISOString().slice(0, 10)
 }
   Exercise.findOneAndUpdate(
-    {_id : inputId},
-    {$set:{_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
+    {username : inputUsername},
+    {$set:{username:inputUsername,description:inputDescription,duration:inputDuration,date:inputDate}},
     {new:true,upsert:true},
     (err,saveExcercise)=>{
       if(!err){
