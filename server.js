@@ -52,6 +52,7 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
 
   User.findOneAndUpdate(
     {username:inputUsername},
+    {$set:{username:inputUsername}},
     {new:true,upsert:true},
     (err,saveUser)=>{
       if(!err){
