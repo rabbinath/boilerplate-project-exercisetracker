@@ -61,6 +61,16 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
     }
   )
 
+  app.get('/api/users',function(req,res){
+User.findOne({},(err,result)=>{
+if(!err){
+  res.json(result)
+}
+
+}
+)
+
+
   // User.findOne({})
   //     .sort({username:1})
   //     .exec((errUser,resultUser) => 
