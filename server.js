@@ -70,11 +70,24 @@ app.get('/api/users',function(req,res){
 )})
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
-  let inputId =req.params[':_id']
-  let resDescription=''
-  let resDuration=''
-  let resDate=new date().get()
+  let inputId =req.body[':_id'];
+  let inputDescription=req.body['description'];
+  let inputDuration=req.body['duration'];
+  let inputDate=req.body['date'];
+if(!inputDate){
+  inputDate=new Date()
+}
+  Exercise.findOneAndUpdate(
+    {_id : inputId},
+    {$set:{_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
+    {new:true,upsert:true},
+    (err,saveExcercise)=>{
+      if(!err){
+        res.json(saveExcercise)
+      }
+    }
 
+  )
 
   User.findOne(
     {_id:inputId},(err,result)=>{
