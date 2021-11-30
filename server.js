@@ -66,12 +66,27 @@ app.get('/api/users',function(req,res){
   User.find({},(err,result)=>{
   if(!err){
     res.json(result)
+  }}
+)})
+
+app.post('/api/users/:_id/exercises',function(req,res){
+  let inputId =req.params[':_id']
+  let resDescription=''
+  let resDuration=''
+  let resDate=new date().get()
+
+
+  User.findOne(
+    {_id:inputId},(err,result)=>{
+  if(!err){
+    req.body['description']=resDescription
+    req.body['duration']=resDuration
+    req.body['date']=resDate
+    res.json(result)
   }
 
   }
 )})
-  
-
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
