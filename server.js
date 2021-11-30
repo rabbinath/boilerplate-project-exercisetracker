@@ -56,7 +56,7 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
     {new:true,upsert:true},
     (err,saveUser)=>{
       if(!err){
-       res.json(saveUser)
+      // res.json(saveUser)
       }
     }
   )
@@ -66,11 +66,12 @@ app.get('/api/users',function(req,res){
   User.find({},(err,result)=>{
   if(!err){
     res.json(result)
+    
   }}
 )})
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
- // let inputId =req.body[':_id'];
+  let inputId =req.body['_id'];
  let inputUsername=req.body['username'];
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
