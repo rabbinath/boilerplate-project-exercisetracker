@@ -75,7 +75,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let inputDuration=req.body['duration'];
   let inputDate=req.body['date'];
 if(!inputDate){
-  inputDate=new Date()
+  inputDate=new Date().toISOString().slice(0, 10)
 }
   Exercise.findOneAndUpdate(
     {_id : inputId},
