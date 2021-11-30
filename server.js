@@ -50,10 +50,11 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
   let inputUsername=req.body['username'];
   let idUsername=0
   User.findOne({})
-      .sort({username:'desc'})
+      .sort({username:1})
       .exec((errUser,resultUser) => 
       {
-        if(!errUser && typeof resultUser!=='undefined')
+        
+        if(!errUser && (typeof resultUser!=='undefined' || resultUser!=='null'))
         {
           inputUsername=resultUser.username
           idUsername=resultUser._id
