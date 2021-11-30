@@ -60,48 +60,17 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
       }
     }
   )
-
-  app.get('/api/users',function(req,res){
-User.findOne({},(err,result)=>{
-if(!err){
-  res.json(result)
-}
-
-}
-)
-
-
-  // User.findOne({})
-  //     .sort({username:1})
-  //     .exec((errUser,resultUser) => 
-  //     {
-  //      // typeof resultUser!=='undefined' || resultUser!==null)
-  //       // if(!errUser  && ((typeof resultUser!=='undefined') || (typeof resultUser!=='null' )))
-  //       // {
-  //       //   inputUsername=resultUser.username
-  //       //   idUsername=resultUser._id
-  //       // }
-  //         if(!errUser)
-  //         {
-  //           User.findOneAndUpdate(
-  //             {username:inputUsername},
-  //             {new:true,upsert:true},
-  //             (err,saveUser)=>{
-  //               if(!err){
-  //                res.json(saveUser)
-  //               }
-  //             }
-  //           )
-  //         }
-  //     }
-      
-        // )
-    
-
-
 })
 
+app.get('/api/users',function(req,res){
+  User.find({},(err,result)=>{
+  if(!err){
+    res.json(result)
+  }
 
+  }
+)})
+  
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
