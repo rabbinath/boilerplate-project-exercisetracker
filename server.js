@@ -54,7 +54,7 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
       .exec((errUser,resultUser) => 
       {
         
-        if(!errUser && (typeof resultUser!=='undefined' || resultUser!===null))
+        if(!errUser && (typeof resultUser!=='undefined' || resultUser!==null))
         {
           inputUsername=resultUser.username
           idUsername=resultUser._id
