@@ -69,7 +69,7 @@ app.get('/api/users',function(req,res){
   }}
 )})
 
-app.post('/api/users/:_id/exercises',function(req,res){
+app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputId =req.params[':_id']
   let resDescription=''
   let resDuration=''
