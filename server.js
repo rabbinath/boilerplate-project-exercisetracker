@@ -56,7 +56,7 @@ app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,re
     {new:true,upsert:true},
     (err,saveUser)=>{
       if(!err){
-      // res.json(saveUser)
+      res.json(saveUser)
       }
     }
   )
