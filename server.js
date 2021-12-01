@@ -95,7 +95,8 @@ if(!inputDate){
         
       //  res.json(saveExcercise)
 
-        User.findOne({_id:inputId},(errById,result)=>{
+      //  User.findOne({_id:inputId},(errById,result)=>{
+        User.findOne({_id:ObjectId(inputId)},(errById,result)=>{
          if (errById) throw errById
          if (result){
            // result.push(saveExcercise)
