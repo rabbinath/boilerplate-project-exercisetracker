@@ -95,8 +95,8 @@ if(!inputDate){
         
       //  res.json(saveExcercise)
 
-        User.findById({_id:inputId},(err,result)=>{
-         if (typeof err !== 'undefined' && err){
+        User.findById({_id:inputId},(errById,result)=>{
+         if (!errById){
            // result.push(saveExcercise)
            // result['description']=saveExcercise.description
            // result['duration']=saveExcercise.duration
