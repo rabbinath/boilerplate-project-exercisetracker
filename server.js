@@ -72,61 +72,46 @@ app.get('/api/users',function(req,res){
 )})
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
+    let inputUsername=''
+  let inputId =new ObjectId(req.body['_id'])
+  User.findOne({inputId}, function(errById,userFound){
+   if(errById) return res.json({error: "Could not find user" });
+   
+   let inputDescription=req.body['description'];
+   let inputDuration=req.body['duration'];
+   let inputDate=req.body['date'];
+   if(!inputDate){
+    inputDate=new Date().toISOString().slice(0, 10)
+   }   
   
-  let inputUsername=''
-  let inputId =new ObjectId(req.body['_id']);
-  User.findOne({inputId}, function(errById,result){
-    if (errById) throw errById;
-    
-    if(!errById){
-      res.json(result)
-    }
-    else
-    {
-      res.send(errById)
-    }
-  
-  })
-  
- //let inputUsername=req.body['username'];
-  let inputDescription=req.body['description'];
-  let inputDuration=req.body['duration'];
-  let inputDate=req.body['date'];
-if(!inputDate){
-  inputDate=new Date().toISOString().slice(0, 10)
-}
+ const exerInpput={
+  description:req.body['description'],
+  duration:req.body['duration'],
+  date:req.body['date']
+
+ }
+
+ userFound.push(exerInpput)
+ if(userFound.count){
+
   Exercise.findOneAndUpdate(
     {_id : inputId},
     {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
     {new:true,upsert:true},
     (err,saveExcercise)=>{
-      if(!err){
-        
-      //  res.json(saveExcercise)
 
-      //  User.findOne({_id:inputId},(errById,result)=>{
-        User.findOne({_id:ObjectId(inputId)},(errById,result)=>{
-         if (errById) throw errById
-         if (result){
-           // result.push(saveExcercise)
-           // result['description']=saveExcercise.description
-           // result['duration']=saveExcercise.duration
-           // result['date']=saveExcercise.date
-           // result['_id']=saveExcercise._id
-            res.json(result)
-           //inputUsername=result.username;     
-          }
-          else
-          {
-            res.send({message: "ID not found"});
-          }
-        }
-        )
+      if(!err){
+        res.json(saveExcercise)
       }
     }
-
   )
 
+}
+
+
+  })
+  
+  
  }
  )
 const listener = app.listen(process.env.PORT || 3000, () => {
