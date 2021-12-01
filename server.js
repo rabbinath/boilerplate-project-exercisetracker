@@ -97,10 +97,11 @@ if(!inputDate){
 
         User.find({_id:inputId},(err,result)=>{
           if(!err){
-            result['description']=saveExcercise.description
-            result['duration']=saveExcercise.duration
-            result['date']=saveExcercise.date
-            result['_id']=saveExcercise._id
+            result.push(saveExcercise)
+           // result['description']=saveExcercise.description
+           // result['duration']=saveExcercise.duration
+           // result['date']=saveExcercise.date
+           // result['_id']=saveExcercise._id
             res.json(result)
            //inputUsername=result.username;     
           }
