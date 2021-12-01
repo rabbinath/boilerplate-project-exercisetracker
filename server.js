@@ -5,6 +5,8 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId; 
+const mongodb = require('mongodb');
+
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -73,7 +75,8 @@ app.get('/api/users',function(req,res){
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
     let inputUsername=''
-  let inputId =new ObjectId(req.body['_id'])
+  let inputId =new mongoose.ObjectId(req.body['_id'])
+  //let inputId =new mongodb.ObjectID(req.body['_id'])
   //let inputId =new req.body['_id']
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
