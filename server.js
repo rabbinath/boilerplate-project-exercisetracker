@@ -74,7 +74,11 @@ app.get('/api/users',function(req,res){
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
   
   
+
+  let inputUsername=''
   let inputId =new ObjectId(req.body['_id']);
+
+  
  //let inputUsername=req.body['username'];
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
@@ -88,13 +92,31 @@ if(!inputDate){
     {new:true,upsert:true},
     (err,saveExcercise)=>{
       if(!err){
+        
         res.json(saveExcercise)
+
+        User.find({_id:inputId},(err,result)=>{
+          if(!err){
+            result['description']=saveExcercise.description
+            result['duration']=saveExcercise.duration
+            result['date']=saveExcercise.date
+            result['_id']=saveExcercise._id
+            res.json(result)
+           //inputUsername=result.username;     
+          }
+          else
+          {
+            return
+          }
+        }
+        )
       }
     }
 
   )
 
- })
+ }
+ )
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
