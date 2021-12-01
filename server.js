@@ -75,8 +75,8 @@ app.get('/api/users',function(req,res){
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
     let inputUsername=''
-  let inputId =new mongoose.Types.ObjectId(req.body['_id'])
-  //let inputId =new mongodb.ObjectID(req.body['_id'])
+  let inputId =req.body['_id']
+  //let inputId =new mongodb.ObjectId(req.body['_id'])
   //let inputId =new req.body['_id']
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
@@ -84,7 +84,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   if(!inputDate){
    inputDate=new Date().toISOString().slice(0, 10)
   }   
-  User.findOne({inputId}, function(errById,userFound){
+  User.findOne({_id:ObjectId(inputId)}, function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
 
 
@@ -94,9 +94,9 @@ const exerInpput={
   date:inputDate
 }
 
- userFound.push(exerInpput)
- if(userFound.count){
 
+ if(userFound.count){
+  userFound.push(exerInpput)
   Exercise.findOneAndUpdate(
     {_id : inputId},
     {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
