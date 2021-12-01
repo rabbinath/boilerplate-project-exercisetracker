@@ -73,7 +73,8 @@ app.get('/api/users',function(req,res){
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
     let inputUsername=''
-  let inputId =new ObjectId(req.body['_id'])
+  //let inputId =new ObjectId(req.body['_id'])
+  let inputId =new req.body['_id']
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
   let inputDate=req.body['date'];
@@ -82,15 +83,13 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   }   
   User.findOne({inputId}, function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
-   
-  
-  
- const exerInpput={
+
+
+const exerInpput={
   description:inputDescription,
   duration:inputDuration,
   date:inputDate
-
- }
+}
 
  userFound.push(exerInpput)
  if(userFound.count){
