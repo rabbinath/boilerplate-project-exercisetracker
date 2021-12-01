@@ -71,7 +71,9 @@ app.get('/api/users',function(req,res){
 )})
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
-  let inputId =req.body['_id'];
+  
+  
+  let inputId =new ObjectId(req.body['_id']);
  //let inputUsername=req.body['username'];
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
