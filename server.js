@@ -73,11 +73,11 @@ app.get('/api/users',function(req,res){
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
   
-  
-
   let inputUsername=''
   let inputId =new ObjectId(req.body['_id']);
-
+  User.findOne({_id:ObjectId(inputId)},(errById,result)=>{
+  res.json(result)
+  })
   
  //let inputUsername=req.body['username'];
   let inputDescription=req.body['description'];
