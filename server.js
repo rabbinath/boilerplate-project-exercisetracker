@@ -4,7 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
-const ObjectId = require('mongodb').ObjectId; 
+//const ObjectId = require('mongodb').ObjectId; 
 const mongodb = require('mongodb');
 
 
@@ -84,7 +84,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   if(!inputDate){
    inputDate=new Date().toISOString().slice(0, 10)
   }   
-  User.findOne({_id:ObjectId(inputId)}, function(errById,userFound){
+  User.findOne({ObjectId(inputId)}), function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
 
 
