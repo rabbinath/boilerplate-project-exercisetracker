@@ -4,9 +4,10 @@ const cors = require('cors')
 require('dotenv').config()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
-//const ObjectId = require('mongodb').ObjectId; 
+const ObjectId = require('mongodb').ObjectId; 
 const mongodb = require('mongodb');
 
+Binary = require('mongodb').Binary
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -76,6 +77,7 @@ app.get('/api/users',function(req,res){
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=''
   let inputId =req.body['_id']
+  var objId=new ObjectId(inputId)
   //let inputId =new mongodb.ObjectId(req.body['_id'])
   //let inputId =new req.body['_id']
   let inputDescription=req.body['description'];
@@ -84,7 +86,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   if(!inputDate){
    inputDate=new Date().toISOString().slice(0, 10)
   }   
-  User.findOne({ObjectId(inputId)}, function(errById,userFound){
+  User.findOne({_id:objId}, function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
 
 
