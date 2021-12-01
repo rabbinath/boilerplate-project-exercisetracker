@@ -95,8 +95,9 @@ if(!inputDate){
         
       //  res.json(saveExcercise)
 
-        User.findById({_id:inputId},(errById,result)=>{
-         if (!errById){
+        User.findOne({_id:inputId},(errById,result)=>{
+         if (errById) throw errById
+         if (result){
            // result.push(saveExcercise)
            // result['description']=saveExcercise.description
            // result['duration']=saveExcercise.duration
@@ -107,7 +108,7 @@ if(!inputDate){
           }
           else
           {
-            return
+            res.send({message: "ID not found"});
           }
         }
         )
