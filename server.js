@@ -76,7 +76,10 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let inputUsername=''
   let inputId =new ObjectId(req.body['_id']);
   User.findOne({_id:ObjectId(inputId)},(errById,result)=>{
-  res.json(result)
+    if(!errById){
+      res.json(result)
+    }
+  
   })
   
  //let inputUsername=req.body['username'];
