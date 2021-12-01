@@ -74,20 +74,21 @@ app.get('/api/users',function(req,res){
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
     let inputUsername=''
   let inputId =new ObjectId(req.body['_id'])
+  let inputDescription=req.body['description'];
+  let inputDuration=req.body['duration'];
+  let inputDate=req.body['date'];
+  if(!inputDate){
+   inputDate=new Date().toISOString().slice(0, 10)
+  }   
   User.findOne({inputId}, function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
    
-   let inputDescription=req.body['description'];
-   let inputDuration=req.body['duration'];
-   let inputDate=req.body['date'];
-   if(!inputDate){
-    inputDate=new Date().toISOString().slice(0, 10)
-   }   
+  
   
  const exerInpput={
-  description:req.body['description'],
-  duration:req.body['duration'],
-  date:req.body['date']
+  description:inputDescription,
+  duration:inputDuration,
+  date:inputDate
 
  }
 
