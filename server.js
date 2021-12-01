@@ -79,6 +79,10 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
     if(!errById){
       res.json(result)
     }
+    else
+    {
+      res.send(errById)
+    }
   
   })
   
