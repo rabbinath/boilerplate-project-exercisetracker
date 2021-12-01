@@ -91,17 +91,7 @@ if(!inputDate){
 
   )
 
-  User.findOne(
-    {_id:inputId},(err,result)=>{
-  if(!err){
-    req.body['description']=resDescription
-    req.body['duration']=resDuration
-    req.body['date']=resDate
-    res.json(result)
-  }
-
-  }
-)})
+ })
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
