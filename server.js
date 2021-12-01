@@ -96,7 +96,7 @@ if(!inputDate){
       //  res.json(saveExcercise)
 
         User.find({_id:inputId},(err,result)=>{
-          if(!err){
+         if (typeof err !== 'undefined' && value){
             result.push(saveExcercise)
            // result['description']=saveExcercise.description
            // result['duration']=saveExcercise.duration
