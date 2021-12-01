@@ -97,7 +97,7 @@ if(!inputDate){
 
         User.findById({inputId},(err,result)=>{
          if (typeof err !== 'undefined' && err){
-            result.push(saveExcercise)
+           // result.push(saveExcercise)
            // result['description']=saveExcercise.description
            // result['duration']=saveExcercise.duration
            // result['date']=saveExcercise.date
