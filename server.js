@@ -93,7 +93,7 @@ if(!inputDate){
     (err,saveExcercise)=>{
       if(!err){
         
-        res.json(saveExcercise)
+      //  res.json(saveExcercise)
 
         User.find({_id:inputId},(err,result)=>{
           if(!err){
