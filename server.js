@@ -102,7 +102,63 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
 // }];
 
 
- if(userFound){
+ if(userFound)
+ {
+//---
+Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate},
+  (errEx,svExcercise)=>{
+    if(!errEx)
+    {
+      UserData.push(userFound)
+      UserData.push(svExcercise)
+      
+    Log.findOne({})
+    .sort({count:-1})
+    .exec((err,countFound)=>
+    {
+      if(err) return res.json({error: "Could not counts" });
+      var countNo=0
+      if(!countFound || countFound.count === undefined || countFound.count === null )
+      {
+        countNo=1
+      } else {  
+        countNo=countFound.count+1
+      }
+      // //---
+      // Log.findOneAndUpdate(
+      //   {_id:inputId},
+      //   {$set:{
+      //   username:userFound.username,
+      //   count:countNo,
+      //   _id:inputId,
+      //  log:{description: saveExcercise.description,duration: saveExcercise.duration,date: saveExcercise.date},
+      //   }},
+      //   {new:true,upsert:true},
+      //   (errlog,saveLog)=>{
+      //     if(errlog) return res.json({error: "Log insert error" });
+      //   }
+
+      // )
+      // //--
+    }
+    
+    
+    )
+    
+ 
+
+    res.json({
+      _id: userFound._id,
+      username: userFound.username,
+      description: svExcercise.description,
+      duration: svExcercise.duration,
+      date: svExcercise.date
+   
+    }
+  
+
+    )
+///--
 
  // userFound.push(exerInpput)
   Exercise.findOneAndUpdate(
@@ -148,13 +204,13 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
     
  
 
-    res.json({
-      _id: userFound._id,
-      username: userFound.username,
-      description: saveExcercise.description,
-      duration: saveExcercise.duration,
-      date: saveExcercise.date
-    })
+    // res.json({
+    //   _id: userFound._id,
+    //   username: userFound.username,
+    //   description: saveExcercise.description,
+    //   duration: saveExcercise.duration,
+    //   date: saveExcercise.date
+    // })
 
      
     //  res.json({
@@ -188,7 +244,8 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
 
   
  }
- )
+  })
+});
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
