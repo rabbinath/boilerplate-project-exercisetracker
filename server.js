@@ -120,7 +120,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
     {
       if(err) return res.json({error: "Could not counts" });
       var countNo=0
-      if(countFound){
+      if(countFound.count){
         countNo=countFound.count+1
       }
       else
