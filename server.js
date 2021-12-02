@@ -123,9 +123,9 @@ const exerInpput=[{
   }
 
   )
-  if(userFoundArray>0){
-    userFound.push(saveExcercise)
-  }
+ // if(userFoundArray>0){
+ //   userFound.push(saveExcercise)
+//  }
   
  }
  )
