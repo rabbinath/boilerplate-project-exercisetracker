@@ -110,13 +110,44 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
     {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
     {new:true,upsert:true},
     (err,saveExcercise)=>{
-
-      if(!err){
-     
+    if(!err){
      UserData.push(userFound)
      UserData.push(saveExcercise)
 
-     res.json({
+    Log.findOne({})
+    .sort({count:-1})
+    .exec((err,countFound)=>
+    {
+      if(err) return res.json({error: "Could not counts" });
+      var countNo=0
+      if(countFound){
+        countNo=countFound.count+1
+      }
+      else
+      {
+        countNo=1
+      }
+      //---
+      Log.findOneAndUpdate(
+        {_id:inputId},
+        {$set:{
+        username:userFound.username,
+        count:countNo,
+        _id:inputId,
+       log:{description: saveExcercise.description,duration: saveExcercise.duration,date: saveExcercise.date},
+        }},
+        {new:true,upsert:true},
+        (errlog,saveLog)=>{
+          if(errlog) return res.json({error: "Log insert error" });
+        }
+
+      )
+      //--
+    })
+    
+ 
+
+    res.json({
       _id: userFound._id,
       username: userFound.username,
       description: saveExcercise.description,
