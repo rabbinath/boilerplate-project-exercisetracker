@@ -53,7 +53,7 @@ let Log=mongoose.model('Log',logSchema)
 app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=req.body['username'];
   
-  var UserData=[]
+
   User.findOneAndUpdate(
     {username:inputUsername},
     {$set:{username:inputUsername}},
@@ -75,6 +75,7 @@ app.get('/api/users',function(req,res){
 )})
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
+  var UserData=[]
   let inputUsername=''
   let inputId =req.body[':_id']
   var objId=new ObjectId(inputId).ObjectId
