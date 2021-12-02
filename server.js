@@ -76,7 +76,7 @@ app.get('/api/users',function(req,res){
 
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=''
-  let inputId =req.body['_id']
+  let inputId =req.body[':_id']
   var objId=new ObjectId(inputId).ObjectId
   //let inputId =new mongodb.ObjectId(req.body['_id'])
   //let inputId =new req.body['_id']
@@ -86,7 +86,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   if(!inputDate){
    inputDate=new Date().toISOString().slice(0, 10)
   }   
-  User.findOne({_id:objId}, function(errById,userFound){
+  User.findOne({:_id:objId}, function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
 
 
