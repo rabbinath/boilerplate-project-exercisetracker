@@ -85,8 +85,11 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let inputDate=req.body['date'];
   if(!inputDate){
    inputDate=new Date().toISOString().slice(0, 10)
-  }   
-  User.findOne({_id:inputId}, function(errById,userFound){
+  }
+  let userFoundArray=0   
+  User.findOne({_id:inputId}, function(errById,userFound)
+  {
+    userFoundArray=userFound.length
    if(errById) return res.json({error: "Could not find user" });
 
 
@@ -98,7 +101,7 @@ const exerInpput=[{
 
 
  if(userFound){
-  userFound.push(exerInpput)
+ // userFound.push(exerInpput)
   Exercise.findOneAndUpdate(
     {_id : inputId},
     {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
@@ -106,7 +109,10 @@ const exerInpput=[{
     (err,saveExcercise)=>{
 
       if(!err){
-        res.json(saveExcercise)
+        // userFound.push(exerInpput)
+       // res.json(saveExcercise)
+       userFound.push(saveExcercise)
+       res.send(saveExcercise)
       }
     }
   )
@@ -114,8 +120,12 @@ const exerInpput=[{
 }
 
 
-  })
-  
+  }
+
+  )
+  if(userFoundArray>0){
+    userFound.push(saveExcercise)
+  }
   
  }
  )
