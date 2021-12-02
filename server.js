@@ -112,8 +112,20 @@ const exerInpput=[{
 
       if(!err){
      //   saveExcercise.push(userFound)
-     UserData.push(userFound)
-     UserData.push(saveExcercise)
+   //  UserData.push(userFound)
+for (var i=0;i<userFound.length;i++){
+  var obj={}
+  obj._id=userFound[i]._id 
+  obj.username=userFound[i].username
+  for (var j=0;j<saveExcercise.length;j++){
+      obj.description=saveExcercise[j].description
+      obj.duration=saveExcercise[j].duration
+      obj.date=saveExcercise[j].date
+  }
+  UserData.push(obj)
+}
+
+  //   UserData.push(saveExcercise)
         // userFound.push(exerInpput)
         res.json(UserData)
      //  res.json(userFound)
