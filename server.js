@@ -111,8 +111,9 @@ const exerInpput=[{
       if(!err){
         // userFound.push(exerInpput)
        // res.json(saveExcercise)
-       userFound.push(saveExcercise)
-       res.send(saveExcercise)
+
+       //userFound.push(saveExcercise)
+       res.send(userFound.concat(saveExcercise))
       }
     }
   )
