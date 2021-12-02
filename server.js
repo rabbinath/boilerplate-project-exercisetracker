@@ -90,7 +90,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let userFoundArray=0   
   User.findOne({_id:inputId}, function(errById,userFound)
   {
-    userFoundArray=userFound.length
+  //  userFoundArray=userFound.length
    if(errById) return res.json({error: "Could not find user" });
 
 
