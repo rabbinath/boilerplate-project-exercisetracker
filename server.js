@@ -115,14 +115,23 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
      
      UserData.push(userFound)
      UserData.push(saveExcercise)
-     
+
      res.json({
-      _id: UserData['_id'],
-      username: UserData['username'],
-      description: UserData['description'],
-      duration: UserData['duration'],
-      date: UserData['date']
+      _id: userFound._id,
+      username: userFound.username,
+      description: saveExcercise.description,
+      duration: saveExcercise.duration,
+      date: saveExcercise.date
     })
+
+     
+    //  res.json({
+    //   _id: UserData['_id'],
+    //   username: UserData['username'],
+    //   description: UserData['description'],
+    //   duration: UserData['duration'],
+    //   date: UserData['date']
+    // })
 
     // res.json(UserData)
      
