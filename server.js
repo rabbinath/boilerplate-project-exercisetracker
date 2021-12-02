@@ -94,7 +94,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
    if(errById) return res.json({error: "Could not find user" });
 
 
-const exerInpput=[{
+const exerInput=[{
   description:inputDescription,
   duration:inputDuration,
   date:inputDate
@@ -112,22 +112,12 @@ const exerInpput=[{
 
       if(!err){
      //   saveExcercise.push(userFound)
-   //  UserData.push(userFound)
-for (var i=0;i<userFound.length;i++){
-  var obj={}
-  obj._id=userFound[i]._id 
-  obj.username=userFound[i].username
-  for (var j=0;j<saveExcercise.length;j++){
-      obj.description=saveExcercise[j].description
-      obj.duration=saveExcercise[j].duration
-      obj.date=saveExcercise[j].date
-  }
-  UserData.push(obj)
-}
-
-  //   UserData.push(saveExcercise)
+     UserData.push(userFound)
+     UserData.push(saveExcercise)
         // userFound.push(exerInpput)
-        res.json(UserData)
+        var myJsonString = JSON.stringify(UserData);
+        var jsonArray = JSON.parse(JSON.stringify(UserData))
+        res.json(jsonArray)
      //  res.json(userFound)
        //userFound.push(saveExcercise)
       // res.send(userFound.concat(saveExcercise))
