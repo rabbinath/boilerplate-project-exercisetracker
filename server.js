@@ -90,11 +90,11 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
    if(errById) return res.json({error: "Could not find user" });
 
 
-const exerInpput={
+const exerInpput=[{
   description:inputDescription,
   duration:inputDuration,
   date:inputDate
-}
+}];
 
 
  if(userFound){
