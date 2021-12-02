@@ -86,7 +86,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   if(!inputDate){
    inputDate=new Date().toISOString().slice(0, 10)
   }   
-  User.findOne({:_id:objId}, function(errById,userFound){
+  User.findOne({_id:inputId}, function(errById,userFound){
    if(errById) return res.json({error: "Could not find user" });
 
 
@@ -97,7 +97,7 @@ const exerInpput={
 }
 
 
- if(userFound.count){
+ if(userFound){
   userFound.push(exerInpput)
   Exercise.findOneAndUpdate(
     {_id : inputId},
