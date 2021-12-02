@@ -77,7 +77,7 @@ app.get('/api/users',function(req,res){
 app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=''
   let inputId =req.body['_id']
-  var objId=new ObjectId(inputId)
+  var objId=new ObjectId(inputId).ObjectId
   //let inputId =new mongodb.ObjectId(req.body['_id'])
   //let inputId =new req.body['_id']
   let inputDescription=req.body['description'];
