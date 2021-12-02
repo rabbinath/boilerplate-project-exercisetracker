@@ -49,7 +49,7 @@ let logSchema=new mongoose.Schema(
 let Exercise=mongoose.model('Exercise',exerciseSchema)
 let User=mongoose.model('User',userSchema)
 let Log=mongoose.model('Log',logSchema)
-
+var UserData=[]
 app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=req.body['username'];
   let idUsername=0
@@ -101,6 +101,7 @@ const exerInpput=[{
 
 
  if(userFound){
+
  // userFound.push(exerInpput)
   Exercise.findOneAndUpdate(
     {_id : inputId},
@@ -109,11 +110,14 @@ const exerInpput=[{
     (err,saveExcercise)=>{
 
       if(!err){
+     //   saveExcercise.push(userFound)
+     UserData.push(userFound)
+     UserData.push(saveExcercise)
         // userFound.push(exerInpput)
-       // res.json(saveExcercise)
-
+        res.json(UserData)
+     //  res.json(userFound)
        //userFound.push(saveExcercise)
-       res.send(userFound.concat(saveExcercise))
+      // res.send(userFound.concat(saveExcercise))
       }
     }
   )
