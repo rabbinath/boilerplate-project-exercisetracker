@@ -120,12 +120,13 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
     {
       if(err) return res.json({error: "Could not counts" });
       var countNo=0
-      if(countFound.count){
-        countNo=countFound.count+1
+      if(!countFound || countFound.count === undefined || countFound.count === null ){
+        countNo=1
       }
       else
       {
-        countNo=1
+    
+        countNo=countFound.count+1
       }
       //---
       Log.findOneAndUpdate(
