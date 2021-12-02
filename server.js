@@ -25,8 +25,8 @@ mongoose.connect(uri,{useNewUrlParser: true,useUnifiedTopology: true});
 let exerciseSchema=new mongoose.Schema(
   {
   username:{type:String},
-  description:String,
-  dusration:Number,
+  description:{type:String,required:true},
+  duration:{type:Number,required:true},
   date:Date
 })
 
@@ -49,11 +49,11 @@ let logSchema=new mongoose.Schema(
 let Exercise=mongoose.model('Exercise',exerciseSchema)
 let User=mongoose.model('User',userSchema)
 let Log=mongoose.model('Log',logSchema)
-var UserData=[]
+
 app.post('/api/users',bodyParser.urlencoded({ extended: false }),function(req,res){
   let inputUsername=req.body['username'];
-  let idUsername=0
-
+  
+  var UserData=[]
   User.findOneAndUpdate(
     {username:inputUsername},
     {$set:{username:inputUsername}},
