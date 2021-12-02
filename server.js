@@ -113,15 +113,15 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
 
       if(!err){
      
-     UserDataObj.push(userFound)
-     UserDataObj.push(saveExcercise)
+     UserData.push(userFound)
+     UserData.push(saveExcercise)
      
-     res.json(UserDataObj)
+    // res.json(UserData)
      
      
     //  var myJsonString = JSON.stringify(UserData);
-    //     var jsonArray = JSON.parse(JSON.stringify(UserData))
-    //     res.json(jsonArray)
+         var jsonArray = JSON.parse(JSON.stringify(UserData))
+         res.json(jsonArray)
 
      //  res.json(userFound)
        //userFound.push(saveExcercise)
