@@ -95,22 +95,24 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
    if(errById) return res.json({error: "Could not find user" });
 
 
-// const exerInput=[{
-//   description:inputDescription,
-//   duration:inputDuration,
-//   date:inputDate
-// }];
+var exerInput={
+  _id:inputId,
+  description:inputDescription,
+  duration:inputDuration,
+  date:inputDate
+};
 
 
  if(userFound)
  {
-//---
-Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate},
+//---Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate},
+Exercise.create(exerInput,
   (errEx,svExcercise)=>{
     if(!errEx)
     {
       UserData.push(userFound)
-      UserData.push(svExcercise)
+      UserData.push(exerInput)
+     // UserData.push(svExcercise)
       
     Log.findOne({})
     .sort({count:-1})
@@ -124,14 +126,32 @@ Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDurat
       } else {  
         countNo=countFound.count+1
       }
-      // //---
+///---------
+// Log.findById({_id:inputId},function(errId,resFind){
+//   if(errId) return res.json({error: "Log findById error" });
+  
+
+// })
+
+Log.updateMany(
+  {_id:inputId },
+  {$push: {'Logs.$.log': {description:inputDescription,
+    duration:inputDuration,
+    date:inputDate  }}},
+  (errId,res)=>{
+    if(errId) return res.json({error: "Log findById error" });
+  }
+);
+///---------
+
+      // // //---
       // Log.findOneAndUpdate(
       //   {_id:inputId},
       //   {$set:{
       //   username:userFound.username,
       //   count:countNo,
       //   _id:inputId,
-      //  log:{description: saveExcercise.description,duration: saveExcercise.duration,date: saveExcercise.date},
+      //  log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
       //   }},
       //   {new:true,upsert:true},
       //   (errlog,saveLog)=>{
@@ -139,7 +159,7 @@ Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDurat
       //   }
 
       // )
-      // //--
+      // // //--
     }
     
     
@@ -160,80 +180,80 @@ Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDurat
     )
 ///--
 
- // userFound.push(exerInpput)
-  Exercise.findOneAndUpdate(
-    {_id : inputId},
-    {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
-    {new:true,upsert:true},
-    (err,saveExcercise)=>{
-    if(!err){
-     UserData.push(userFound)
-     UserData.push(saveExcercise)
+//  // userFound.push(exerInpput)
+//   Exercise.findOneAndUpdate(
+//     {_id : inputId},
+//     {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
+//     {new:true,upsert:true},
+//     (err,saveExcercise)=>{
+//     if(!err){
+//      UserData.push(userFound)
+//      UserData.push(saveExcercise)
 
-    Log.findOne({})
-    .sort({count:-1})
-    .exec((err,countFound)=>
-    {
-      if(err) return res.json({error: "Could not counts" });
-      var countNo=0
-      if(!countFound || countFound.count === undefined || countFound.count === null ){
-        countNo=1
-      }
-      else
-      {
+//     Log.findOne({})
+//     .sort({count:-1})
+//     .exec((err,countFound)=>
+//     {
+//       if(err) return res.json({error: "Could not counts" });
+//       var countNo=0
+//       if(!countFound || countFound.count === undefined || countFound.count === null ){
+//         countNo=1
+//       }
+//       else
+//       {
     
-        countNo=countFound.count+1
-      }
-      //---
-      Log.findOneAndUpdate(
-        {_id:inputId},
-        {$set:{
-        username:userFound.username,
-        count:countNo,
-        _id:inputId,
-       log:{description: saveExcercise.description,duration: saveExcercise.duration,date: saveExcercise.date},
-        }},
-        {new:true,upsert:true},
-        (errlog,saveLog)=>{
-          if(errlog) return res.json({error: "Log insert error" });
-        }
+//         countNo=countFound.count+1
+//       }
+//       //---
+//       Log.findOneAndUpdate(
+//         {_id:inputId},
+//         {$set:{
+//         username:userFound.username,
+//         count:countNo,
+//         _id:inputId,
+//        log:{description: saveExcercise.description,duration: saveExcercise.duration,date: saveExcercise.date},
+//         }},
+//         {new:true,upsert:true},
+//         (errlog,saveLog)=>{
+//           if(errlog) return res.json({error: "Log insert error" });
+//         }
 
-      )
-      //--
-    })
+//       )
+//       //--
+//     })
     
  
 
-    // res.json({
-    //   _id: userFound._id,
-    //   username: userFound.username,
-    //   description: saveExcercise.description,
-    //   duration: saveExcercise.duration,
-    //   date: saveExcercise.date
-    // })
+//     // res.json({
+//     //   _id: userFound._id,
+//     //   username: userFound.username,
+//     //   description: saveExcercise.description,
+//     //   duration: saveExcercise.duration,
+//     //   date: saveExcercise.date
+//     // })
 
      
-    //  res.json({
-    //   _id: UserData['_id'],
-    //   username: UserData['username'],
-    //   description: UserData['description'],
-    //   duration: UserData['duration'],
-    //   date: UserData['date']
-    // })
+//     //  res.json({
+//     //   _id: UserData['_id'],
+//     //   username: UserData['username'],
+//     //   description: UserData['description'],
+//     //   duration: UserData['duration'],
+//     //   date: UserData['date']
+//     // })
 
-    // res.json(UserData)
+//     // res.json(UserData)
      
      
-    //  var myJsonString = JSON.stringify(UserData);
-       //  var jsonArray = JSON.parse(JSON.stringify(UserData))
-      //   res.json(jsonArray)
+//     //  var myJsonString = JSON.stringify(UserData);
+//        //  var jsonArray = JSON.parse(JSON.stringify(UserData))
+//       //   res.json(jsonArray)
 
-     //  res.json(userFound)
-       //userFound.push(saveExcercise)
-      // res.send(userFound.concat(saveExcercise))
-      }
-    }
-  )
+//      //  res.json(userFound)
+//        //userFound.push(saveExcercise)
+//       // res.send(userFound.concat(saveExcercise))
+//       }
+//     }
+//   )
 
 }
 
@@ -244,6 +264,7 @@ Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDurat
 
   
  }
+
   })
 });
 const listener = app.listen(process.env.PORT || 3000, () => {
