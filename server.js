@@ -105,8 +105,19 @@ var exerInput={
 
  if(userFound)
  {
+
+
 //---Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate},
-Exercise.create(exerInput,
+Exercise.findOneAndUpdate(
+  {_id:inputId},
+  {$set:{
+  username:userFound.username,
+  description:exerInput.description,
+  duration:exerInput.duration,
+  date:exerInput.date,
+  _id:inputId 
+  }},
+  {new:true,upsert:true},
   (errEx,svExcercise)=>{
     if(!errEx)
     {
@@ -127,19 +138,56 @@ Exercise.create(exerInput,
         countNo=countFound.count+1
       }
 ///---------
-// Log.findById({_id:inputId},function(errId,resFind){
-//   if(errId) return res.json({error: "Log findById error" });
-  
+Log.findById({_id:inputId},function(errId,resFind){
+  if(errId) return res.json({error: "Log findById error" });
+  if(!resFind || resFind === undefined || resFind === null ){
+// // //---
+      Log.findOneAndUpdate(
+        {_id:inputId},
+        {$set:{
+        username:userFound.username,
+        count:countNo,
+        _id:inputId,
+       log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
+        }},
+        {new:true,upsert:true},
+        (errlog,saveLog)=>{
+          if(errlog) return res.json({error: "Log insert error" });
+        }
 
-// })
-
+      )
+      // // //--
+  }
+  else
+  {
 Log.updateMany(
-  {_id:inputId },
-  {$push: {"log": {description:inputDescription,duration:inputDuration,date:inputDate}}},
+  {_id: inputId },
+  {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
+}},
+  // {$push: {"log": {"description":inputDescription,"duration":inputDuration,"date":inputDate}}},
   (errId,res)=>{
-    if(errId) return res.json({error: "Log findById error" });
+   // if(errId) return res.json({error: "Log findById error" });
+    
   }
 );
+  }
+
+  
+})
+
+
+
+
+// Log.updateMany(
+//   {_id: new ObjectId(inputId) },
+//   {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
+// }},
+//   // {$push: {"log": {"description":inputDescription,"duration":inputDuration,"date":inputDate}}},
+//   (errId,res)=>{
+//    // if(errId) return res.json({error: "Log findById error" });
+    
+//   }
+// );
 ///---------
 
       // // //---
