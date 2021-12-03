@@ -313,6 +313,17 @@ Log.updateMany(
 
   })
 });
+
+
+app.get('/api/users/:_id/logs',function(req,res){
+  let getId=req.params._id;
+Log.find({_id:getId},(err,result)=>{
+  if(!err){
+    res.json(result)  
+  }
+}
+)})
+
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
