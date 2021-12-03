@@ -135,9 +135,7 @@ Exercise.create(exerInput,
 
 Log.updateMany(
   {_id:inputId },
-  {$push: {'Logs.$.log': {description:inputDescription,
-    duration:inputDuration,
-    date:inputDate  }}},
+  {$push: {"log": {description:inputDescription,duration:inputDuration,date:inputDate}}},
   (errId,res)=>{
     if(errId) return res.json({error: "Log findById error" });
   }
