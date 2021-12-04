@@ -92,7 +92,7 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   {
     inputDate=new Date(inputDate).toDateString();
     if(inputDate='Invalid Date'){
-      inputDate=''
+      inputDate=new Date().toISOString().slice(0, 10)
     }
   }
 
