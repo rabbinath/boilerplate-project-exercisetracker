@@ -79,7 +79,14 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   var UserData=[]
   let inputUsername=''
   let inputId =req.body[':_id']
-  var objId=new ObjectId(inputId).ObjectId
+  if (inputId.length==12 || inputId.length==24)
+    {    
+    }
+    else{return}
+
+  if(ObjectId(inputId).ObjectId){
+    return
+      }
   //let inputId =new mongodb.ObjectId(req.body['_id'])
   //let inputId =new req.body['_id']
   let inputDescription=req.body['description'];
@@ -105,7 +112,7 @@ return
     inputDate=new Date(inputDate).toDateString();
     if(inputDate=='Invalid Date'){
       return
-      inputDate=new Date().toDateString();
+    //  inputDate=new Date().toDateString();
     }
   }
 
