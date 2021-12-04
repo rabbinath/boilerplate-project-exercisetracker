@@ -90,8 +90,10 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   }
   else
   {
-    inputDate=inputDate.toDateString();
+    inputDate=new Date(inputDate).toDateString();
   }
+
+  
   let userFoundArray=0   
   User.findOne({_id:inputId}, function(errById,userFound)
   {
