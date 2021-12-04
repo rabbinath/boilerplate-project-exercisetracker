@@ -91,6 +91,9 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   else
   {
     inputDate=new Date(inputDate).toDateString();
+    if(inputDate='Invalid Date'){
+      inputDate=''
+    }
   }
 
   
@@ -221,7 +224,7 @@ Log.updateMany(
       _id: userFound._id,
       description: svExcercise.description,
       duration: svExcercise.duration,
-      date: svExcercise.date.toISOString().slice(0, 10)
+      date: svExcercise.date
       
     }
   
