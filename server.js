@@ -103,6 +103,7 @@ return
   if(inputDuration == null || inputDuration.length == 0)
   { return};
 
+  //let testDate=new Date(inputDate).toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"})
   if(!inputDate){
    //inputDate=new Date().toISOString().slice(0, 10)
    inputDate=new Date().toDateString();
@@ -244,7 +245,7 @@ Log.updateMany(
       _id: userFound._id,
       description: svExcercise.description,
       duration: svExcercise.duration,
-      date: svExcercise.date
+      date:   svExcercise.date.toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"})
       
     }
   
