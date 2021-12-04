@@ -85,6 +85,12 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let inputDescription=req.body['description'];
   let inputDuration=req.body['duration'];
   let inputDate=req.body['date'];
+
+  if(inputDescription == null || inputDescription.length == 0)
+  {return};
+  if(inputDuration == null || inputDuration.length == 0)
+  { return};
+
   if(!inputDate){
    //inputDate=new Date().toISOString().slice(0, 10)
    inputDate=new Date().toDateString();
