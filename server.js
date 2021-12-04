@@ -144,10 +144,7 @@ Log.findById({_id:inputId},function(errId,resFind){
 // // //---
       Log.findOneAndUpdate(
         {_id:inputId},
-        {$set:{
-        username:userFound.username,
-        count:countNo,
-        _id:inputId,
+        {$set:{username:userFound.username,count:countNo,_id:inputId,
        log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
         }},
         {new:true,upsert:true},
@@ -214,8 +211,8 @@ Log.updateMany(
  
 
     res.json({
-      _id: userFound._id,
       username: userFound.username,
+      _id: userFound._id,
       description: svExcercise.description,
       duration: svExcercise.duration,
       date: svExcercise.date
