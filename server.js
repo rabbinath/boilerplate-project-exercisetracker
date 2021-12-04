@@ -88,6 +88,11 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
 
   if(inputDescription == null || inputDescription.length == 0)
   {return};
+  if (isNaN(inputDuration)){
+return
+  }
+  // if(typeof inputDuration === 'number'){
+  //   return  };
   if(inputDuration == null || inputDuration.length == 0)
   { return};
 
