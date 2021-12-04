@@ -245,7 +245,7 @@ Log.updateMany(
       _id: userFound._id,
       description: svExcercise.description,
       duration: svExcercise.duration,
-      date:   svExcercise.date.toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"})
+      date:   svExcercise.date.toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"}).replace(/,/g," ")
       
     }
   
