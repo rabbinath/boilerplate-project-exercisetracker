@@ -86,13 +86,14 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let inputDuration=req.body['duration'];
   let inputDate=req.body['date'];
   if(!inputDate){
-   inputDate=new Date().toISOString().slice(0, 10)
+   //inputDate=new Date().toISOString().slice(0, 10)
+   inputDate=new Date().toDateString();
   }
   else
   {
     inputDate=new Date(inputDate).toDateString();
     if(inputDate='Invalid Date'){
-      inputDate=new Date().toISOString().slice(0, 10)
+      inputDate=new Date().toDateString();
     }
   }
 
