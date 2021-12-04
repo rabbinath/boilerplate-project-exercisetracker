@@ -215,8 +215,8 @@ Log.updateMany(
       _id: userFound._id,
       description: svExcercise.description,
       duration: svExcercise.duration,
-      date: svExcercise.date
-   
+      date: svExcercise.date.toISOString().slice(0, 10)
+      
     }
   
 
