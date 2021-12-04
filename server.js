@@ -24,15 +24,15 @@ mongoose.connect(uri,{useNewUrlParser: true,useUnifiedTopology: true});
 
 let exerciseSchema=new mongoose.Schema(
   {
-  username:{type:String},
+  username:{type:String, required:true, unique:false},
   description:{type:String,required:true},
   duration:{type:Number,required:true},
-  date:Date
+  date:{type:Date, required:false}
 })
 
 let userSchema=new mongoose.Schema(
 {
-  username: String
+  username: { type: String, required: true, unique: false }
 })
 
 let logSchema=new mongoose.Schema(
