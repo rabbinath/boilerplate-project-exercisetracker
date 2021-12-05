@@ -169,38 +169,38 @@ Exercise.findOneAndUpdate(
         countNo=countFound.count+1
       }
 ///---------
-// Log.findById({_id:inputId},function(errId,resFind){
-//   if(errId) return res.json({error: "Log findById error" });
-//   if(!resFind || resFind === undefined || resFind === null ){
-// // // //---
-//       Log.findOneAndUpdate(
-//         {_id:inputId},
-//         {$set:{username:userFound.username,count:countNo,_id:inputId,
-//        log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
-//         }},
-//         {new:true,upsert:true},
-//         (errlog,saveLog)=>{
-//           if(errlog) return res.json({error: "Log insert error" });
-//         }
+Log.findById({_id:inputId},function(errId,resFind){
+  if(errId) return res.json({error: "Log findById error" });
+  if(!resFind || resFind === undefined || resFind === null ){
+// // //---
+      Log.findOneAndUpdate(
+        {_id:inputId},
+        {$set:{username:userFound.username,count:countNo,_id:inputId,
+       log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
+        }},
+        {new:true,upsert:true},
+        (errlog,saveLog)=>{
+          if(errlog) return res.json({error: "Log insert error" });
+        }
 
-//       )
-//       // // //--
-//   }
-//   else
-//   {
-// Log.updateMany(
-//   {_id: inputId },
-//   {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
-// }},
+      )
+      // // //--
+  }
+  else
+  {
+Log.updateMany(
+  {_id: inputId },
+  {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
+}},
   
-//   (errId,res)=>{
+  (errId,res)=>{
     
-//   }
-// );
-//   }
+  }
+);
+  }
 
   
-// })
+})
 
 // Log.updateMany(
 //   {_id: new ObjectId(inputId) },
