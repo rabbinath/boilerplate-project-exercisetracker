@@ -78,7 +78,8 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
   let UserDataObj=new Object()
   var UserData=[]
   let inputUsername=''
-  let inputId =req.body[':_id']
+  //req.params.userId || req.body.userId;
+  let inputId =req.body[':_id'] 
   if (inputId.length==12 || inputId.length==24)
     {    
     }
