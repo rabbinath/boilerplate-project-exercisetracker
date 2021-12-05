@@ -176,7 +176,7 @@ Log.findById({_id:inputId},function(errId,resFind){
       Log.findOneAndUpdate(
         {_id:inputId},
         {$set:{username:userFound.username,count:countNo,_id:inputId,
-       log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
+       log:{description: svExcercise.description,duration: svExcercise.duration,date: exerInput.date},
         }},
         {new:true,upsert:true},
         (errlog,saveLog)=>{
@@ -190,7 +190,7 @@ Log.findById({_id:inputId},function(errId,resFind){
   {
 Log.updateMany(
   {_id: inputId },
-  {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
+  {$push: {log:{description:inputDescription,duration:inputDuration,date:exerInput.date}
 }},
   
   (errId,res)=>{
