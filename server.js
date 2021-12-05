@@ -156,18 +156,26 @@ Exercise.findOneAndUpdate(
       UserData.push(exerInput)
      // UserData.push(svExcercise)
       
-    Log.findOne({})
-    .sort({count:-1})
-    .exec((err,countFound)=>
-    {
-      if(err) return res.json({error: "Could not counts" });
-      var countNo=0
+     var countNo=0
+     var queryCount = Exercise.find({_id:inputId});
+     queryCount.count(function (err, countFound) {
+    if (err) console.log(err)
+    else 
+    {    countNo=0
       if(!countFound || countFound.count === undefined || countFound.count === null )
       {
         countNo=1
       } else {  
         countNo=countFound.count+1
-      }
+      }}
+});
+
+    // Log.findOne({})
+    // .sort({count:-1})
+    // .exec((err,countFound)=>
+    // {
+    //   if(err) return res.json({error: "Could not counts" });
+      
 ///---------
 Log.findById({_id:inputId},function(errId,resFind){
   if(errId) return res.json({error: "Log findById error" });
@@ -230,10 +238,10 @@ Log.updateMany(
 
       // )
       // // //--
-    }
+    //}
     
    
-    )
+    //)
    
     res.json({
       username: userFound.username,
