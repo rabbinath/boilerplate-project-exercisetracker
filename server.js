@@ -42,7 +42,7 @@ let logSchema=new mongoose.Schema(
     log: [{
     description: String,
     duration: Number,
-    date: Date
+    date:{type:String}
   }]
 })
 
