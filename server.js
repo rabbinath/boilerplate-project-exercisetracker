@@ -192,9 +192,8 @@ Log.updateMany(
   {_id: inputId },
   {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
 }},
-  // {$push: {"log": {"description":inputDescription,"duration":inputDuration,"date":inputDate}}},
+  
   (errId,res)=>{
-   // if(errId) return res.json({error: "Log findById error" });
     
   }
 );
@@ -202,9 +201,6 @@ Log.updateMany(
 
   
 })
-
-
-
 
 // Log.updateMany(
 //   {_id: new ObjectId(inputId) },
@@ -236,23 +232,19 @@ Log.updateMany(
       // // //--
     }
     
-    
+   
     )
-    
- 
-
-    res.json({
-      username: userFound.username,
-      _id: userFound._id,
-      description: svExcercise.description,
-      duration: svExcercise.duration,
-      date:   svExcercise.date
-    //  date:   svExcercise.date.toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"}).replace(/,/g," ")
+    res.json(UserData)
+    // res.json({
+    //   username: userFound.username,
+    //   _id: userFound._id,
+    //   description:svExcercise.description,
+    //   duration: svExcercise.duration,
+    //   date:svExcercise.date
+    // //  date:   svExcercise.date.toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"}).replace(/,/g," ")
       
-    }
-  
-
-    )
+    // }
+    // )
 ///--
 
 //  // userFound.push(exerInpput)
