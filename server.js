@@ -23,7 +23,9 @@ mongoose.connect(uri,{useNewUrlParser: true,useUnifiedTopology: true});
 
 
 let exerciseSchema=new mongoose.Schema(
+  
   {
+ userid:{type:String},
   username:{type:String, required:true, unique:false},
   description:{type:String,required:true},
   duration:{type:Number,required:true},
@@ -74,7 +76,9 @@ app.get('/api/users',function(req,res){
   }}
 )})
 
-app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),function(req,res){
+ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),  function(req,res)
+{
+  var countNo=0
   let UserDataObj=new Object()
   var UserData=[]
   let inputUsername=''
@@ -96,7 +100,8 @@ app.post('/api/users/:_id/exercises',bodyParser.urlencoded({ extended: false }),
 
   if(inputDescription == null || inputDescription.length == 0)
   {return};
-  if (isNaN(inputDuration)){
+  if (isNaN(inputDuration))
+  {
 return
   }
   // if(typeof inputDuration === 'number'){
@@ -120,17 +125,18 @@ return
 
   
   let userFoundArray=0   
-  User.findOne({_id:inputId}, function(errById,userFound)
+  User.findOne({_id:inputId}, async function(errById,userFound)
+
   {
   //  userFoundArray=userFound.length
    if(errById) return res.json({error: "Could not find user" });
 
 
 var exerInput={
-  _id:inputId,
-  description:inputDescription,
+    description:inputDescription,
   duration:inputDuration,
-  date:inputDate
+  date:inputDate,
+  userid:inputId
 };
 
 
@@ -138,53 +144,47 @@ var exerInput={
  {
 
 
-//---Exercise.insertOne({_id:inputId,description:inputDescription,duration:inputDuration,date:inputDate},
-Exercise.findOneAndUpdate(
-  {_id:inputId},
-  {$set:{
-  username:userFound.username,
-  description:exerInput.description,
-  duration:exerInput.duration,
-  date:exerInput.date,
-  _id:inputId 
-  }},
-  {new:true,upsert:true},
-  (errEx,svExcercise)=>{
-    if(!errEx)
-    {
-      UserData.push(userFound)
-      UserData.push(exerInput)
-     // UserData.push(svExcercise)
-      
-     var countNo=0
-     var queryCount = Exercise.find({_id:inputId});
-     queryCount.count(function (err, countFound) {
-    if (err) console.log(err)
-    else 
-    {    countNo=0
-      if(!countFound || countFound.count === undefined || countFound.count === null )
-      {
-        countNo=1
-      } else {  
-        countNo=countFound.count+1
-      }}
-});
+//-------------
 
-    // Log.findOne({})
-    // .sort({count:-1})
-    // .exec((err,countFound)=>
-    // {
-    //   if(err) return res.json({error: "Could not counts" });
-      
-///---------
-Log.findById({_id:inputId},function(errId,resFind){
+  Exercise.create({userid:inputId,
+    username:userFound.username,
+    description:exerInput.description,
+    duration:exerInput.duration,
+    date:exerInput.date
+    
+    })
+
+    UserData.push(userFound)
+    UserData.push(exerInput)
+  
+    
+ 
+
+    countNo =   await Exercise.countDocuments({userid:inputId}, function(err,resCount){
+      if (err)
+      {
+        return
+      }
+      else
+      {
+        countNo=resCount
+      }
+     });
+      // Exercise.countDocuments({userid:inputId},  function(err,resCount){
+      // if (err)  return res.json({error: "count error" });
+      // else
+      // {
+      //  // countNo=res.count+1
+      //   countNo= resCount;
+//------------log start
+await Log.findById({_id:inputId},function(errId,resFind){
   if(errId) return res.json({error: "Log findById error" });
   if(!resFind || resFind === undefined || resFind === null ){
 // // //---
       Log.findOneAndUpdate(
         {_id:inputId},
         {$set:{username:userFound.username,count:countNo,_id:inputId,
-       log:{description: svExcercise.description,duration: svExcercise.duration,date: exerInput.date},
+       log:{description: exerInput.description,duration: exerInput.duration,date: exerInput.date},
         }},
         {new:true,upsert:true},
         (errlog,saveLog)=>{
@@ -196,9 +196,9 @@ Log.findById({_id:inputId},function(errId,resFind){
   }
   else
   {
-Log.updateMany(
-  {_id: inputId },
-  {$push: {log:{description:inputDescription,duration:inputDuration,date:exerInput.date}
+ Log.updateMany(
+  {_id: inputId },{$set:{count:countNo}},
+  {$push: {log:{description: exerInput.description,duration:exerInput.duration,date:exerInput.date}
 }},
   
   (errId,res)=>{
@@ -208,139 +208,33 @@ Log.updateMany(
   }
 
   
-})
+});
 
-// Log.updateMany(
-//   {_id: new ObjectId(inputId) },
-//   {$push: {log:{description:inputDescription,duration:inputDuration,date:inputDate}
-// }},
-//   // {$push: {"log": {"description":inputDescription,"duration":inputDuration,"date":inputDate}}},
-//   (errId,res)=>{
-//    // if(errId) return res.json({error: "Log findById error" });
-    
-//   }
-// );
-///---------
+//------------log end
 
-      // // //---
-      // Log.findOneAndUpdate(
-      //   {_id:inputId},
-      //   {$set:{
-      //   username:userFound.username,
-      //   count:countNo,
-      //   _id:inputId,
-      //  log:{description: svExcercise.description,duration: svExcercise.duration,date: svExcercise.date},
-      //   }},
-      //   {new:true,upsert:true},
-      //   (errlog,saveLog)=>{
-      //     if(errlog) return res.json({error: "Log insert error" });
-      //   }
 
-      // )
-      // // //--
-    //}
-    
-   
-    //)
-   
+
+
+
+    //   }
+    // })
+
+
+ 
+
     res.json({
       username: userFound.username,
       _id: userFound._id,
-      description:svExcercise.description,
-      duration: svExcercise.duration,
-      date:svExcercise.date
-    //  date:   svExcercise.date.toLocaleDateString('en-US', {weekday: "short" , month:"short", day:"numeric",year:"numeric"}).replace(/,/g," ")
-      
-    }
-    )
-///--
+      description:exerInput.description,
+      duration: exerInput.duration,
+      date:exerInput.date})
 
-//  // userFound.push(exerInpput)
-//   Exercise.findOneAndUpdate(
-//     {_id : inputId},
-//     {$set:{_id : inputId,description:inputDescription,duration:inputDuration,date:inputDate}},
-//     {new:true,upsert:true},
-//     (err,saveExcercise)=>{
-//     if(!err){
-//      UserData.push(userFound)
-//      UserData.push(saveExcercise)
 
-//     Log.findOne({})
-//     .sort({count:-1})
-//     .exec((err,countFound)=>
-//     {
-//       if(err) return res.json({error: "Could not counts" });
-//       var countNo=0
-//       if(!countFound || countFound.count === undefined || countFound.count === null ){
-//         countNo=1
-//       }
-//       else
-//       {
-    
-//         countNo=countFound.count+1
-//       }
-//       //---
-//       Log.findOneAndUpdate(
-//         {_id:inputId},
-//         {$set:{
-//         username:userFound.username,
-//         count:countNo,
-//         _id:inputId,
-//        log:{description: saveExcercise.description,duration: saveExcercise.duration,date: saveExcercise.date},
-//         }},
-//         {new:true,upsert:true},
-//         (errlog,saveLog)=>{
-//           if(errlog) return res.json({error: "Log insert error" });
-//         }
-
-//       )
-//       //--
-//     })
-    
- 
-
-//     // res.json({
-//     //   _id: userFound._id,
-//     //   username: userFound.username,
-//     //   description: saveExcercise.description,
-//     //   duration: saveExcercise.duration,
-//     //   date: saveExcercise.date
-//     // })
-
-     
-//     //  res.json({
-//     //   _id: UserData['_id'],
-//     //   username: UserData['username'],
-//     //   description: UserData['description'],
-//     //   duration: UserData['duration'],
-//     //   date: UserData['date']
-//     // })
-
-//     // res.json(UserData)
-     
-     
-//     //  var myJsonString = JSON.stringify(UserData);
-//        //  var jsonArray = JSON.parse(JSON.stringify(UserData))
-//       //   res.json(jsonArray)
-
-//      //  res.json(userFound)
-//        //userFound.push(saveExcercise)
-//       // res.send(userFound.concat(saveExcercise))
-//       }
-//     }
-//   )
-
+//-----------
 }
-
-
   }
 
-  )
-
-  
- }
-
-  })
+);
 });
 
 
