@@ -128,6 +128,7 @@ return
   User.findOne({_id:inputId}, async function(errById,userFound)
 
   {
+try{
   //  userFoundArray=userFound.length
    if(errById) return res.json({error: "Could not find user" });
 
@@ -232,9 +233,10 @@ await Log.findById({_id:inputId},function(errId,resFind){
 
 //-----------
 }
-  }
+}
+catch(error){}
+  });
 
-);
 });
 
 
