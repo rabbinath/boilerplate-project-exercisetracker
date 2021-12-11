@@ -84,10 +84,10 @@ app.get('/api/users',function(req,res){
   let inputUsername=''
   //req.params.userId || req.body.userId;
   let inputId =req.body[':_id'] 
-  if (inputId.length==12 || inputId.length==24)
-    {    
-    }
-    else{return}
+  // if (inputId.length==12 || inputId.length==24)
+  //   {    
+  //   }
+  //   else{return}
 
   if(ObjectId(inputId).ObjectId){
     return
