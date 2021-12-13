@@ -197,9 +197,9 @@ await Log.findById({_id:inputId},function(errId,resFind){
   }
   else
   {
- Log.updateMany(
-  {_id: inputId },{$set:{count:countNo}},
-  {$push: {log:{description: exerInput.description,duration:exerInput.duration,date:exerInput.date}
+ Log.updateOne(
+  {_id: inputId },
+  {$set:{count:countNo},$push: {log:{description: exerInput.description,duration:exerInput.duration,date:exerInput.date}
 }},
   
   (errId,res)=>{
@@ -227,7 +227,7 @@ await Log.findById({_id:inputId},function(errId,resFind){
       username: userFound.username,
       _id: userFound._id,
       description:exerInput.description,
-      duration: exerInput.duration,
+      duration: Number(exerInput.duration),
       date:exerInput.date})
 
 
