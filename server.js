@@ -25,13 +25,12 @@ mongoose.connect(uri,{useNewUrlParser: true,useUnifiedTopology: true});
 let exerciseSchema=new mongoose.Schema(
   
   {
- userid:{type:String},
   username:{type:String, required:true, unique:false},
   description:{type:String,required:true},
   duration:{type:Number,required:true},
-  date:{type:String, required:false},
-  versionKey: false
-})
+  date:{type:String, required:false}
+
+  })
 
 let userSchema=new mongoose.Schema(
 {
@@ -138,7 +137,7 @@ var exerInput={
     description:inputDescription,
   duration:inputDuration,
   date:inputDate,
-  userid:inputId
+  _id:inputId
 };
 
 
@@ -148,13 +147,13 @@ var exerInput={
 
 //-------------
 
-  Exercise.create({userid:inputId,
-    username:userFound.username,
-    description:exerInput.description,
-    duration:exerInput.duration,
-    date:exerInput.date
+  // Exercise.create({_id:inputId,
+  //   username:userFound.username,
+  //   description:exerInput.description,
+  //   duration:exerInput.duration,
+  //   date:exerInput.date
     
-    })
+  //   })
 
     UserData.push(userFound)
     UserData.push(exerInput)
@@ -162,57 +161,59 @@ var exerInput={
     
  
 
-    countNo =   await Exercise.countDocuments({userid:inputId}, function(err,resCount){
-      if (err)
-      {
-        return
-      }
-      else
-      {
-        countNo=resCount
-      }
-     });
+    // countNo =   await Exercise.countDocuments({userid:inputId}, function(err,resCount){
+    //   if (err)
+    //   {
+    //     return
+    //   }
+    //   else
+    //   {
+    //     countNo=resCount
+    //   }
+    //  });
+
+
       // Exercise.countDocuments({userid:inputId},  function(err,resCount){
       // if (err)  return res.json({error: "count error" });
       // else
       // {
       //  // countNo=res.count+1
       //   countNo= resCount;
-//------------log start
-await Log.findById({_id:inputId},function(errId,resFind){
-  if(errId) return res.json({error: "Log findById error" });
-  if(!resFind || resFind === undefined || resFind === null ){
-// // //---
-      Log.findOneAndUpdate(
-        {_id:inputId},
-        {$set:{username:userFound.username,count:countNo,_id:inputId,
-       log:{description: exerInput.description,duration: exerInput.duration,date: exerInput.date},
-        }},
-        {new:true,upsert:true},
-        (errlog,saveLog)=>{
-          if(errlog) return res.json({error: "Log insert error" });
-        }
+// //------------log start
+// await Log.findById({_id:inputId},function(errId,resFind){
+//   if(errId) return res.json({error: "Log findById error" });
+//   if(!resFind || resFind === undefined || resFind === null ){
+// // // //---
+//       Log.findOneAndUpdate(
+//         {_id:inputId},
+//         {$set:{username:userFound.username,count:countNo,_id:inputId,
+//        log:{description: exerInput.description,duration: exerInput.duration,date: exerInput.date},
+//         }},
+//         {new:true,upsert:true},
+//         (errlog,saveLog)=>{
+//           if(errlog) return res.json({error: "Log insert error" });
+//         }
 
-      )
-      // // //--
-  }
-  else
-  {
- Log.updateOne(
-  {_id: inputId },
-  {$set:{count:countNo},$push: {log:{description: exerInput.description,duration:exerInput.duration,date:exerInput.date}
-}},
+//       )
+//       // // //--
+//   }
+//   else
+//   {
+//  Log.updateOne(
+//   {_id: inputId },
+//   {$set:{count:countNo},$push: {log:{description: exerInput.description,duration:exerInput.duration,date:exerInput.date}
+// }},
   
-  (errId,res)=>{
+//   (errId,result)=>{
     
-  }
-);
-  }
+//   }
+// );
+//   }
 
   
-});
+// });
 
-//------------log end
+// //------------log end
 
 
 
@@ -229,13 +230,13 @@ await Log.findById({_id:inputId},function(errId,resFind){
       _id: userFound._id,
       description:exerInput.description,
       duration: Number(exerInput.duration),
-      date:exerInput.date.toDateString()})
+      date:exerInput.date})
 
 
 //-----------
 }
 }
-catch(error){}
+catch(error){ console.log(error)}
   });
 
 });
