@@ -229,7 +229,7 @@ await Log.findById({_id:inputId},function(errId,resFind){
       _id: userFound._id,
       description:exerInput.description,
       duration: Number(exerInput.duration),
-      date:exerInput.date})
+      date:exerInput.date.toDateString()})
 
 
 //-----------
